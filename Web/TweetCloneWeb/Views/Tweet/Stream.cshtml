@@ -1,0 +1,16 @@
+﻿@model TweetCloneWeb.Models.Stream
+
+@{
+    ViewBag.Title = Session["fullname"] + "'s Tweet Stream";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            @{Html.RenderPartial("_FollowPanel", Model);}
+        </div>
+        <div class="col-md-8">
+            @{Html.RenderPartial("_TweetPanel", Model);}
+        </div>
+    </div>
+</div>

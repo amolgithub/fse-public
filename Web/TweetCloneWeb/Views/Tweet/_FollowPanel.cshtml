@@ -1,0 +1,20 @@
+﻿@model TweetCloneWeb.Models.Stream
+<div class="panel panel-default">
+    <!--   Follow box -->
+    <div class="container" style="margin: 10px 0 10px 0;">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="followForm">
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="followId" />
+                        <span class="input-group-btn"><button class="btn btn-info pull-right" onclick="TweetClone.follow()">Follow</button></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Follow information panel -->
+    <div id="tweetInfo">
+        @Html.Partial("_TweetInfo", Model.User)
+    </div>
+</div>

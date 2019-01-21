@@ -1,0 +1,29 @@
+﻿@model List<TweetCloneWeb.Entities.Tweet>
+
+<div class="container">
+    <h4>Tweets</h4>
+    @if(Model != null && Model.Count > 0)
+    { 
+        foreach (var tweet in Model)
+        {
+            <div class="row">
+                <div class="col-md-3">@tweet.UserId</div>
+                <div class="col-md-6">@tweet.Message</div>
+                <div class="col-md-3">
+                @if(tweet.Created.Value.Date == DateTime.Today)
+                { 
+                    @tweet.Created.Value.ToString("HH:mm")
+                }
+                else
+                {
+                    @tweet.Created.Value.Date.ToString("dd-MM-yyyy")
+                }
+                </div>
+            </div>
+        }
+    }
+    else
+    { 
+        <div class="text-info">No tweeting yet.</div>
+    }
+</div>

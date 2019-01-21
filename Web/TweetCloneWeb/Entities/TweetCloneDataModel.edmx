@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TweetCloneDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Following">
+          <Key>
+            <PropertyRef Name="followerId" />
+          </Key>
+          <Property Name="followerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="FollowingId" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Joined" Type="datetime" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tweet">
+          <Key>
+            <PropertyRef Name="TweetId" />
+          </Key>
+          <Property Name="TweetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="140" Nullable="false" />
+          <Property Name="Created" Type="datetime" />
+        </EntityType>
+        <Association Name="fk_following_following_id">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Following" Type="Self.Following" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Following">
+              <PropertyRef Name="FollowingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_following_user_id">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Following" Type="Self.Following" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Following">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tweet_user_id">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Tweet" Type="Self.Tweet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tweet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TweetCloneDBModelStoreContainer">
+          <EntitySet Name="Following" EntityType="Self.Following" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tweet" EntityType="Self.Tweet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_following_following_id" Association="Self.fk_following_following_id">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Following" EntitySet="Following" />
+          </AssociationSet>
+          <AssociationSet Name="fk_following_user_id" Association="Self.fk_following_user_id">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Following" EntitySet="Following" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tweet_user_id" Association="Self.fk_tweet_user_id">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Tweet" EntitySet="Tweet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TweetCloneDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TweetCloneDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Followings" EntityType="TweetCloneDBModel.Following" />
+          <EntitySet Name="People" EntityType="TweetCloneDBModel.Person" />
+          <EntitySet Name="Tweets" EntityType="TweetCloneDBModel.Tweet" />
+          <AssociationSet Name="fk_following_following_id" Association="TweetCloneDBModel.fk_following_following_id">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Following" EntitySet="Followings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_following_user_id" Association="TweetCloneDBModel.fk_following_user_id">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Following" EntitySet="Followings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tweet_user_id" Association="TweetCloneDBModel.fk_tweet_user_id">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Tweet" EntitySet="Tweets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Following">
+          <Key>
+            <PropertyRef Name="followerId" />
+          </Key>
+          <Property Name="followerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="FollowingId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FollowerUser" Relationship="TweetCloneDBModel.fk_following_following_id" FromRole="Following" ToRole="Person" />
+          <NavigationProperty Name="FollowingUser" Relationship="TweetCloneDBModel.fk_following_user_id" FromRole="Following" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Joined" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Followings" Relationship="TweetCloneDBModel.fk_following_following_id" FromRole="Person" ToRole="Following" />
+          <NavigationProperty Name="Followers" Relationship="TweetCloneDBModel.fk_following_user_id" FromRole="Person" ToRole="Following" />
+          <NavigationProperty Name="Tweets" Relationship="TweetCloneDBModel.fk_tweet_user_id" FromRole="Person" ToRole="Tweet" />
+        </EntityType>
+        <EntityType Name="Tweet">
+          <Key>
+            <PropertyRef Name="TweetId" />
+          </Key>
+          <Property Name="TweetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="140" FixedLength="false" Unicode="false" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="TweetCloneDBModel.fk_tweet_user_id" FromRole="Tweet" ToRole="Person" />
+        </EntityType>
+        <Association Name="fk_following_following_id">
+          <End Type="TweetCloneDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="TweetCloneDBModel.Following" Role="Following" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Following">
+              <PropertyRef Name="FollowingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_following_user_id">
+          <End Type="TweetCloneDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="TweetCloneDBModel.Following" Role="Following" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Following">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tweet_user_id">
+          <End Type="TweetCloneDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="TweetCloneDBModel.Tweet" Role="Tweet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tweet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TweetCloneDBModelStoreContainer" CdmEntityContainer="TweetCloneDB">
+          <EntitySetMapping Name="Followings">
+            <EntityTypeMapping TypeName="TweetCloneDBModel.Following">
+              <MappingFragment StoreEntitySet="Following">
+                <ScalarProperty Name="FollowingId" ColumnName="FollowingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="followerId" ColumnName="followerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="TweetCloneDBModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Joined" ColumnName="Joined" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tweets">
+            <EntityTypeMapping TypeName="TweetCloneDBModel.Tweet">
+              <MappingFragment StoreEntitySet="Tweet">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TweetId" ColumnName="TweetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

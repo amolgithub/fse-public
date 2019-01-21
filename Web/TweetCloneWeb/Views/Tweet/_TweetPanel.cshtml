@@ -1,0 +1,31 @@
+﻿@model TweetCloneWeb.Models.Stream
+<div class="panel panel-default">    
+    <div class="container" style="margin: 10px 0 10px 0;">
+        <div class="row">
+            <div class="col-lg-12">
+                <form id="tweetForm">
+                    <h4>What are you doing?</h4>
+                    <div class="form-group">
+                        <textarea class="form-control" type="text" name="message" style="width:100%;"></textarea>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 pull-right">
+                <button class="btn btn-info pull-right" onclick="TweetClone.update()">Update</button>
+            </div>
+        </div>
+    </div>
+    <!-- Follow information panel -->
+    <div id="tweetBoard">
+        @Html.Partial("_TweetBoard", Model.Tweets)
+    </div>
+</div>
+
+<script>
+    setInterval(function () {
+        //console.log("refreshing board");
+        TweetClone.refreshBoard();
+    }, 5000);
+</script>
