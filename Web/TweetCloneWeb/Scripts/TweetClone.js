@@ -1,4 +1,5 @@
-﻿var TweetClone = {};
+﻿// TweetClone js application functions
+var TweetClone = {};
 
 TweetClone.signup = function () { 
     var form = $('#signupForm');
