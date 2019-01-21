@@ -1,6 +1,7 @@
 ﻿// TweetClone js application functions
 var TweetClone = {};
 
+// Sign up to application
 TweetClone.signup = function () { 
     var form = $('#signupForm');
     //form.validate();
@@ -16,6 +17,7 @@ TweetClone.signup = function () {
     }
 }
 
+// login to application
 TweetClone.login = function () {
     var formData = $('#loginForm').serialize();
     $.post('/Profile/Login',formData,function (result) {
@@ -26,6 +28,7 @@ TweetClone.login = function () {
         });
 }
 
+// update info and tweet board
 TweetClone.update = function() {
     var formData = $('#tweetForm').serialize();
     $.post('Update', formData, function (view) {
@@ -35,6 +38,7 @@ TweetClone.update = function() {
     $('#tweetForm')[0].reset();
 }
 
+// follow other user
 TweetClone.follow = function () {
     var formData = $('#followForm').serialize();
     $.post('Follow', formData, function (view) {
@@ -44,18 +48,21 @@ TweetClone.follow = function () {
     $('#followForm')[0].reset();
 }
 
+// refresh info bar
 TweetClone.refreshInfo = function () {
     $.get("RefreshInfo", function (view) {
         $("#tweetInfo").html(view);
     });
 }
 
+// refresh tweet board
 TweetClone.refreshBoard = function () {
     $.get("RefreshBoard", function (view) {
         $("#tweetBoard").html(view);
     });
 }
 
+// update profile
 TweetClone.updateProfile = function () {
     var formData = $('#profileForm').serialize();
     $.post('/Profile/Save', formData, function (result) {
@@ -67,6 +74,7 @@ TweetClone.updateProfile = function () {
     });
 }
 
+// delete profile
 TweetClone.deleteProfile = function () {
     $.post("/Profile/Delete", function (result) {
         $("#msg").html("");
